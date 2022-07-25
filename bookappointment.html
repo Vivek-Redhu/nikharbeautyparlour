@@ -94,7 +94,7 @@ function validateForm() {
 }
 
 .form-box{
-  background-color: lightgray;
+  stroke: lightgray;
   margin: 10px;
   
   text-align: center;
@@ -104,6 +104,50 @@ function validateForm() {
 
 
 </style>
+
+<link rel="stylesheet" href="css/mobiscroll.javascript.min.css">
+<script src="js/mobiscroll.javascript.min.js"></script>
+<style type="text/css">
+  body {
+      margin: 0;
+      padding: 0;
+  }
+
+  body,
+  html {
+      height: 100%;
+  }
+
+  .md-calendar-booking .mbsc-calendar-text {
+      text-align: center;
+  }
+  
+  .md-calendar-booking .booking-datetime .mbsc-datepicker-tab-calendar {
+      flex: 1 1 0;
+      min-width: 300px;
+  }
+  
+  .md-calendar-booking .mbsc-timegrid-item {
+      margin-top: 1.5em;
+      margin-bottom: 1.5em;
+  }
+  
+  .md-calendar-booking .mbsc-timegrid-container {
+      top: 30px;
+  }
+  </style>
+   <script>  
+    function validateform(){  
+    var name=document.myform.name.value;  
+      
+    if (name==null || name==""){  
+      alert("Name can't be blank");  
+      return false;  
+    }
+    }  
+    </script>  
+    
+          <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -150,39 +194,163 @@ function validateForm() {
 
     <!-- ======= Contact Section ======= -->
 <div class="form-box">
-    <form action="forms/contact.php"method="post" role="form" class="php-email-form">
-     <div class="name">
-      <label for="name"><h3>Name*:</h3></label>
-      <input type="text" id="name" name="name"  class="form-control" placeholder="Your Name" required>
+    <form action="forms/contact.php"method="post" role="form" class="php-email-form" onsubmit="return validateform()">
+      <div class="container">
+        <form>
+       <!--   <i class="fas fa-paper-plane"></i>-->
+    <div class="name">
+          <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" placeholder="Enter your name" id="contact-name" onkeyup="validateName()">
+            <span id="name-error"></span>
+          </div>
+     </div>     
+    <br>
+    <hr>
+    <div class="number">
+          <div class="input-group">
+            <label>Phone No.</label>
+            <input type="tel" placeholder="123 456 7890" id="contact-phone" onkeyup="validatePhone()">
+            <span id="phone-error"></span>
+    
+          </div>
+          </div>
+    <br>
+    <hr>
+    <div class="email">
+          <div class="input-group">
+            <label>Email Id</label>
+            <input type="email" placeholder="Enter Email" id="contact-email" onkeyup="validateEmail()">
+            <span id="email-error"></span>
+    
+          </div>   
+        </div>
+      </form>
+    <hr>
       </div>
-      <hr>
-      <div class="number">
-        <label for="number"><h3>Number*:</h3></label>
-        <input type="text" id="number" name="number"  class="form-control" placeholder="Your Number" required>
-        </div><hr>
-        <div class="email">
-          <label for="email"><h3>Email*:</h3></label>
-          <input type="text" id="email" name="email"  class="form-control" placeholder="Your Email" required>
-          </div>
 <hr>
-          <div class="date">
-           <h3> Date :</h3> <input type="date" name="date" id="date">
-          </div>
-<hr>
-          <div class="time">
-            <h3>Time Slot available</h3>
-          </div>          
-          <div class="time">
-            <input type="checkbox" class="time" value="10:00-11:00">10:00-11:00 
-            <input type="checkbox" class="time" value="11:00-12:00">11:00-12:00 <br>
-            <input type="checkbox" class="time" value="12:00-13:00">12:00-13:00 
-            <input type="checkbox" class="time" value="12:00-13:00">12:00-13:00 <br>
-            <input type="checkbox" class="time" value="13:00-14:00">13:00-14:00 
-            <input type="checkbox" class="time" value="14:00-15:00">14:00-15:00 <br>
-            <input type="checkbox" class="time" value="15:00-16:00">15:00-16:00 
-            <input type="checkbox" class="time" value="16:00-17:00">16:00-17:00 <br>
-            <input type="checkbox" class="time" value="17:00-18:00">17:00-18:00 
-          </div><hr>
+
+<div mbsc-page class="demo-appointment-booking">
+  <div style="height:100%">
+      <div class="md-calendar-booking">
+    
+        <div class="mbsc-form-group">
+            <div class="mbsc-form-group-title">Select date & time</div>
+            <div id="demo-booking-datetime" class="booking-datetime"></div>
+        </div>
+  
+    </div>
+  </div>
+</div>
+
+<script>
+
+    mobiscroll.setOptions({
+        locale: mobiscroll.localeEn,             // Specify language like: locale: mobiscroll.localePl or omit setting to use default
+        theme: 'ios',                            // Specify theme like: theme: 'ios' or omit setting to use default
+        themeVariant: 'light'                    // More info about themeVariant: https://docs.mobiscroll.com/5-17-2/javascript/calendar#opt-themeVariant
+    });
+    
+    var min = '2022-07-23T00:00';
+    var max = '2025-01-23T00:00';
+    
+   
+    
+    mobiscroll.datepicker('#demo-booking-datetime', {
+        display: 'inline',                       // Specify display mode like: display: 'bottom' or omit setting to use default
+        controls: ['calendar', 'timegrid'],      // More info about controls: https://docs.mobiscroll.com/5-17-2/javascript/calendar#opt-controls
+        min: min,                                // More info about min: https://docs.mobiscroll.com/5-17-2/javascript/calendar#opt-min
+        max: max,                                // More info about max: https://docs.mobiscroll.com/5-17-2/javascript/calendar#opt-max
+        minTime: '10:00',
+        maxTime: '17:59',
+        stepMinute: 60,
+        width: null,                             // More info about width: https://docs.mobiscroll.com/5-17-2/javascript/calendar#opt-width
+        onPageLoading: function (event, inst) {  // More info about onPageLoading: https://docs.mobiscroll.com/5-17-2/javascript/calendar#event-onPageLoading
+            getDatetimes(event.firstDay, function callback(bookings) {
+                inst.setOptions({
+                    labels: bookings.labels,     // More info about labels: https://docs.mobiscroll.com/5-17-2/javascript/calendar#opt-labels
+                    invalid: bookings.invalid    // More info about invalid: https://docs.mobiscroll.com/5-17-2/javascript/calendar#opt-invalid
+                });
+            });
+        }
+    });
+    
+   
+    
+    function getPrices(d, callback) {
+        var invalid = [],
+            labels = [];
+    
+        mobiscroll.util.http.getJson('https://trial.mobiscroll.com/getprices/?year=' + d.getFullYear() + '&month=' + d.getMonth(), function (bookings) {
+            for (var i = 0; i < bookings.length; ++i) {
+                var booking = bookings[i],
+                    d = new Date(booking.d);
+    
+                if (booking.price > 0) {
+                    labels.push({
+                        start: d,
+                        title: '$' + booking.price,
+                        textColor: '#e1528f'
+                    });
+                } else {
+                    invalid.push(d);
+                }
+            }
+            callback({ labels: labels, invalid: invalid });
+        }, 'jsonp');
+    }
+
+    function getDatetimes(day, callback) {
+        var invalid = [];
+        var labels = [];
+    
+        mobiscroll.util.http.getJson('https://trial.mobiscroll.com/getbookingtime/?year=' + day.getFullYear() + '&month=' + day.getMonth(), function (bookings) {
+            for (var i = 0; i < bookings.length; ++i) {
+                var booking = bookings[i];
+                var bDate = new Date(booking.d);
+    
+                if (booking.nr > 0) {
+                    labels.push({
+                        start: bDate,
+                        title: booking.nr + ' SPOTS',
+                        textColor: '#e1528f'
+                    });
+                    $.merge(invalid, booking.invalid);
+                } else {
+                    invalid.push(bDate);
+                }
+            }
+            callback({ labels: labels, invalid: invalid });
+        }, 'jsonp');
+    }
+    
+    function getBookings(d, callback) {
+        var invalid = [],
+            labels = [];
+    
+        mobiscroll.util.http.getJson('https://trial.mobiscroll.com/getbookings/?year=' + d.getFullYear() + '&month=' + d.getMonth(), function (bookings) {
+            for (var i = 0; i < bookings.length; ++i) {
+                var booking = bookings[i],
+                    d = new Date(booking.d);
+    
+                if (booking.nr > 0) {
+                    labels.push({
+                        start: d,
+                        title: booking.nr + ' SPOTS',
+                        textColor: '#e1528f'
+                    });
+                } else {
+                    invalid.push(d);
+                }
+            }
+            callback({ labels: labels, invalid: invalid });
+        }, 'jsonp');
+    }
+</script>
+
+
+
+     <hr>
           <div class="services">
             <h3>Service Required</h3>
             <label class="control-label col-md-4" for="optiontext">Select an option</label><br>
@@ -226,155 +394,7 @@ function validateForm() {
     
     
 
-   <!-- <form name="myForm" action="forms/contact.php" onsubmit="return validateForm()" method="post"role="form" class="php-email-form">
-      Name: <input type="text" name="fname" class="form-control" id="name" placeholder="Your Name"required>
-      <input type="submit" value="Submit">
-    </form>
-         
-    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="250">
-........................................................................
-      <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-        <div class="row">
-          <div class="col-md-6 form-group">
-            Name :<input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-          </div>
-          <div class="col-md-6 form-group">
-            Mob No :<input type="text" name="name" class="form-control" id="name" placeholder="Your Number" required>
-          </div>
-          ...............................................................
-          <div class="col-md-6 form-group">
-            Email id :<input type="text" name="name" class="form-control" id="name" placeholder="Your Email" required>
-          </div> 
-          ......................................................................
-          <div class="col-md-6 form-group">
-            Date : <input type="date" name="date" id="date">
-          </div>
-          ..............................................................
-          <P>Time Slot avialable</P>
-
-            
-              
-           
-
-            <div>
-              <input type="button" value="10:00-11:00">
-              <input type="button" value="11:00-12:00">
-              <input type="button" value="12:00-13:00">
-              <input type="button" value="12:00-13:00">
-              <input type="button" value="13:00-14:00">
-              <input type="button" value="14:00-15:00">
-              <input type="button" value="15:00-16:00">
-              <input type="button" value="16:00-17:00">
-              <input type="button" value="17:00-18:00">
-            </div>
-      <script>let actualTimeSlot = []
-        for(let i = 0; i < times_ara.length; i++) {
-            if(parseInt(times_ara[i]) < parseInt(timeBooked.split("-")[0])){
-                actualTimeSlot.push(times_ara[i])
-            } else if(parseInt(times_ara[i]) > parseInt(timeBooked.split("-")[1])) {
-                actualTimeSlot.push(times_ara[i])
-            } else {
-                console.log("booked")
-            }
-        }</script>     
-......................................................................................
-            <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-              <P>Service Required</P>
-            </div>
-            <script type="text/javascript"> $(document).ready(function () { $('#checkBtn').click(function() { checked = $("input[type=checkbox]:checked").length; if(!checked) { alert("You must check at least one checkbox."); return false; } }); }); </script> 
-
-                          <div class="form-group mt-3">
-                            <input type="checkbox" name="Facials" id="">  Facials
-                            </div>
-              
-                            <div class="form-group mt-3">
-                              <input type="checkbox" name="Waxing" id=""> Waxing
-                              </div>
-              
-                              <div class="form-group mt-3">
-                                <input type="checkbox" name="Threading" id=""> Threading
-                                </div>
-              
-                                <div class="form-group mt-3">
-                                  <input type="checkbox" name="Bleach" id=""> Bleach
-                                  </div>
-                                  
-                                  <div class="form-group mt-3">
-                                    <input type="checkbox" name="Body Spa" id=""> Body Spa
-                                    </div>
-              
-                                    <div class="form-group mt-3">
-                                      <input type="checkbox" name="Hair Spa" id=""> Hair Spa
-                                      </div>
-              ..................................................................
-                                      <div class="form-group mt-3">
-                                        <input type="checkbox" name="Hair Colour" id=""> Hair Colour
-                                        </div>
-              
-                                        <div class="form-group mt-3">
-                                          <input type="checkbox" name="Hair Style" id=""> Hair Style
-                                          </div>
-              
-                                          <div class="form-group mt-3">
-                                            <input type="checkbox" name="Pedicure" id=""> Pedicure
-                                            </div>
-              
-                                            <div class="form-group mt-3">
-                                              <input type="checkbox" name="Manicure" id=""> Manicure
-                                              </div>
-              .................................................................................
-                                              <div class="form-group mt-3">
-                                                <input type="checkbox" name="Body Massage" id=""> Body Massage
-                                                </div>
-              
-                                                <div class="form-group mt-3">
-                                                  <input type="checkbox" name="Nail Filling" id=""> Nail Filling
-                                                  </div>
-              
-                                                  <div class="form-group mt-3">
-                                                    <input type="checkbox" name="Offer 1" id=""> Offer 1
-                                                    </div>
-              
-                                                    <div class="form-group mt-3">
-                                                      <input type="checkbox" name="Offer 2" id=""> Offer 2
-                                                      </div>
-              
-                                                      <div class="form-group mt-3">
-                                                        <input type="checkbox" name="Offer 3" id=""> Offer 3
-                                                        </div>
-              
-                                                        <div class="form-group mt-3">
-                                                          <input type="checkbox" name="Offer 4" id=""> Offer 4
-                                                          </div>
-              
-                                                          <div class="form-group mt-3">
-                                                            <input type="checkbox" name="Offer 5" id=""> Offer 5
-                                                            </div>
-                                                            ....................................................................................
-          </div>
-          <input type="button" value="Test Required" id="checkBtn">
-        </div>
-        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-          <a href="ratelist.html" class="ratelist">Ratelist</a>
-          
-       
-        </div>
-        
-        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-          <button type="submit" class="btn" onclick="openPopup()">Submit the Request</button>
-          <div class="popup" id="popup">
-            <img src="assets/img/404-tick.png" >
-            <h2>Thank You!</h2>
-            <p>Your details have been successfully submitted. Thank You!</p>
-            <button type="button" onclick="closePopup()">OK</button>
-          </div>
-        </div>
-
-        
-  
-        </div>
-
-      </div>-->
+   
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
@@ -421,7 +441,7 @@ function validateForm() {
     })
   })
 </script>
-
+<script src="script.js"></script>
 </body>
 
 </html>
